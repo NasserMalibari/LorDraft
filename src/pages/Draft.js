@@ -4,11 +4,15 @@ import DeckViewer from "../components/Deck";
 import DraftSection from "../components/DraftSection";
 import Nav from "../components/Nav";
 import { getRandomElements } from "../helpers/sample";
+import { useParams } from "react-router-dom"
+
 
 // the main page
 function Draft() {
   // "regions" | "cards" | "finished"
+  const type = useParams().type;
   const [draftState, setDraftState] = useState('regions');
+
   
   let availableRegions = ["Demacia", "Ionia", "Targon", 
   "PiltoverZaun", "Noxus", "Freljord", "Bilgewater", "BandleCity",
@@ -82,7 +86,12 @@ function Draft() {
   // regions is a list of two regions
   const initialiseAvailableCards = async () => {
     try {
-      const response = await fetch('/cards.json');
+      let response = ''
+      if (type !== 'eternal') {
+        response = await fetch('/cards.json');
+      } else {
+        response = await fetch('/eternalCards.json');
+      }
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -124,7 +133,7 @@ function Draft() {
       return;
     }
     // generateCardsToShow();
-    if (deck.numCards === 0 || deck.numCards === 1 || deck.numCards === 14 || deck.numCards == 15 || deck.numCards === 28 || deck.numCards === 29) {
+    if (deck.numCards === 0 || deck.numCards === 1 || deck.numCards === 14 || deck.numCards === 15 || deck.numCards === 28 || deck.numCards === 29) {
       setHeaderText(`Select Champion`);
       // generate champion to show
       let newOpts = getRandomElements(availableChamps, 4);
@@ -159,7 +168,7 @@ function Draft() {
     let regionOptions = getRandomElements(availableRegions, 4);
     let newOptions = []
     regionOptions.forEach((region) => {
-      newOptions.push({'value': region, 'path': `./${region}.png`});
+      newOptions.push({'value': region, 'path': `/${region}.png`});
     });
 
     setOptions(newOptions);
@@ -173,19 +182,22 @@ function Draft() {
   }, []);
 
   return (
-        <Box sx={{ display: 'flex' }}>
-          <CssBaseline />
-          <Nav />
-          <Box
-            component="main"
-            sx={{ flexGrow: 1, p: 3, marginTop: 8 }} // Adjust marginTop based on AppBar height
-          >
-            <DraftSection cards={options} selectOption={selectOption} header={headerText}
-            isLoaded={allLoaded} doneLoading={doneLoading}
-            />
-          </Box>
-          <DeckViewer deck={deck}/>
-        </Box>
+
+  <Box sx={{ display: 'flex' }}>
+        {/* <h1>{type}</h1> */}
+    <CssBaseline />
+    <Nav />
+    <Box
+      component="main"
+      sx={{ flexGrow: 1, p: 3, marginTop: 8 }} // Adjust marginTop based on AppBar height
+    >
+      <DraftSection cards={options} selectOption={selectOption} header={headerText}
+      isLoaded={allLoaded} doneLoading={doneLoading}
+      />
+    </Box>
+    <DeckViewer deck={deck}/>
+  </Box>
+        
       );
 
   function addToDeck(selectedValue, pool, setPool) {
