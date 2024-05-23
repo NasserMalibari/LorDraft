@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, CssBaseline } from '@mui/material';
-import Deck from "../components/Deck";
+import DeckViewer from "../components/Deck";
 import DraftSection from "../components/DraftSection";
 import Nav from "../components/Nav";
 import { getRandomElements } from "../helpers/sample";
@@ -184,7 +184,7 @@ function Draft() {
             isLoaded={allLoaded} doneLoading={doneLoading}
             />
           </Box>
-          <Deck deck={deck}/>
+          <DeckViewer deck={deck}/>
         </Box>
       );
 
