@@ -1,12 +1,15 @@
 import React from "react";
 import { Box, Button, Divider } from '@mui/material';
 import { useNavigate } from "react-router-dom";
+import Nav from "../components/Nav";
 
 
 function Welcome() {
     const navigate = useNavigate();
 
     return (
+        <>
+        <Nav />
         <Box
           sx={{
             display: 'flex',
@@ -51,18 +54,10 @@ function Welcome() {
                 Play
               </Button>
             </Box>
-            {/* <Divider />
-            <Box
-              sx={{
-                padding: '16px',
-                backgroundColor: '#d0d0d0',
-              }}
-            >
-              Section 3
-            </Box> */}
           </Box>
         </Box>
-      );
+        </>
+    );
     };
 
 export default Welcome;
