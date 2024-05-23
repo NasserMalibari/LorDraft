@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, AppBar, Toolbar, Typography, CssBaseline, Drawer, Divider, List, ListItem, ListItemText } from '@mui/material';
+import { Box, AppBar, Toolbar, Typography, CssBaseline, Drawer, Divider, List, ListItem, ListItemText, Button } from '@mui/material';
 import CardBox from "./CardBox";
 
 // cards is a list of 'card' objects
@@ -15,8 +15,9 @@ import CardBox from "./CardBox";
 }
 */
 function Deck({deck}) {
+
   // sort
-  deck.sort((a, b) => {
+  deck.cards !== undefined && deck.cards.sort((a, b) => {
     if (a.card.type !== b.card.type) {
       return a.card.type.localeCompare(b.card.type);
     } else if (a.card.cost !== b.card.cost) {
@@ -44,9 +45,18 @@ function Deck({deck}) {
 >
   <Toolbar />
   <Divider />
+  <Box sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+  <Button variant="contained">
+      Copy Deck Code
+  </Button>
+  <Box>
+    {deck.numCards} / 40
+  </Box>
+  </Box>
+
   <Box sx={{display: 'flex', flexDirection: 'column'}}>
 
-  {deck !== undefined && deck.map((card, index) => (
+  {deck.cards !== undefined && deck.cards.map((card, index) => (
     <CardBox key={index} card={card}/>
   // <Box key={index}>
   //   {card.card.name} {card.count}
@@ -54,13 +64,6 @@ function Deck({deck}) {
 ))}
 
   </Box>
-  {/* <List>
-    {deck !== undefined && deck.map((text, index) => (
-      <ListItem key={text}>
-        <ListItemText primary={} />
-      </ListItem>
-    ))}
-  </List> */}
 </Drawer>
 }
 

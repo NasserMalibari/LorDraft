@@ -184,7 +184,7 @@ function Draft() {
             isLoaded={allLoaded} doneLoading={doneLoading}
             />
           </Box>
-          <Deck deck={deck['cards']}/>
+          <Deck deck={deck}/>
         </Box>
       );
 

@@ -3,7 +3,6 @@ import React from "react"
 
 function CardBox({card}) {
     
-    console.log(card)
   return <Box
   sx={{border: '2px solid black', width: '260px', height: '30px', display:'flex', justifyContent: 'flex-start', gap: '10px',
     alignItems: 'center'
