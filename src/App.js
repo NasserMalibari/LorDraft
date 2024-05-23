@@ -9,7 +9,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Welcome />}></Route>
+          <Route path='/' element={<Draft />}></Route>
           <Route path="/draft" element={<Draft />}></Route>
         </Routes>
       
