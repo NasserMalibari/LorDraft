@@ -55,11 +55,12 @@ function DeckViewer({deck}) {
 
 
 
-  const drawerWidth = 270;
+  const drawerWidth = '22%';
 
   return <Drawer
   sx={{
     width: drawerWidth,
+    minWidth: '300px',
     flexShrink: 0,
     '& .MuiDrawer-paper': {
       width: drawerWidth,
@@ -73,7 +74,7 @@ function DeckViewer({deck}) {
   <Divider />
   <Box sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
   <Button variant="contained" onClick={handleClick}>
-      Copy Deck Code
+      Copy Code
   </Button>
   <Snackbar
       message="Copied to clibboard"

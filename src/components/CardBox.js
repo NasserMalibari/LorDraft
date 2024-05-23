@@ -4,17 +4,21 @@ import React from "react"
 function CardBox({card}) {
     
   return <Box
-  sx={{border: '2px solid black', width: '260px', height: '30px', display:'flex', justifyContent: 'flex-start', gap: '10px',
+  sx={{border: '2px solid black', width: '100%', height: '30px', display:'flex', justifyContent: 'space-between', gap: '10px',
     alignItems: 'center'
   }}>
-    <Box >
-      {card.card.cost}
-    </Box>
-    <Box >
-      {card.card.name}
-    </Box>
-    <Box sx={{ marginLeft: 'auto', marginRight: '5px' }}>
+    <Box sx={{display: 'flex', justifyContent: 'flex-start', gap: '10px'}}>
+      <Box >
+        {card.card.cost}
+      </Box>
+      <Box >
+        {card.card.name}
+      </Box>
+      </Box>
+    <Box>
+    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
       x{card.count}
+    </Box>
     </Box>
   </Box>
 }
