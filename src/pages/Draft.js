@@ -88,9 +88,9 @@ function Draft() {
     try {
       let response = ''
       if (type !== 'eternal') {
-        response = await fetch('/cards.json');
+        response = await fetch('/standardv2.json');
       } else {
-        response = await fetch('/eternalCards.json');
+        response = await fetch('/eternalv2.json');
       }
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -107,11 +107,11 @@ function Draft() {
 
         data[region]['champions'].forEach((champ) => {
           setAvailableChamps(prevChamps => [...prevChamps, { ...champ, count: 3 }]);
-          setAllCards(prevChamps => [...prevChamps, {...champ, type: 'champion'}]);
+          setAllCards(prevChamps => [...prevChamps, {...champ, rarity: 'champion'}]);
         });
         data[region]['rest'].forEach((card) => {
           setAvailableFollowers(prevFollowers => [...prevFollowers, { ...card, count: 3 }])
-          setAllCards(prevFollowers => [...prevFollowers,  {...card, type: 'follower'}]);
+          setAllCards(prevFollowers => [...prevFollowers,  {...card, rarity: 'follower'}]);
         });
       });
     } catch (error) {
@@ -153,7 +153,7 @@ function Draft() {
       setOptions(newOpts.map((card) => {
         return {
           "value": card.cardCode,
-          "path": card.path
+          "path": `/allCards/${card.cardCode}.png`
         };
       }));
     } else {
@@ -195,7 +195,7 @@ function Draft() {
       isLoaded={allLoaded} doneLoading={doneLoading}
       />
     </Box>
-    <DeckViewer deck={deck}/>
+    <DeckViewer deck={deck} regions={regions}/>
   </Box>
         
       );
@@ -206,7 +206,6 @@ function Draft() {
         setDeck(prevDeck => {
           let newDeck = {...prevDeck};
           newDeck['numCards'] += 1;
-          
           const index = newDeck['cards'].findIndex(element => element.card.cardCode === selectedValue);
 
           if (index !== -1 ){

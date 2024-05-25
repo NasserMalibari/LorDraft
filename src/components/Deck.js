@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Snackbar, Box, AppBar, Toolbar, Typography, CssBaseline, Drawer, Divider, List, ListItem, ListItemText, Button, decomposeColor } from '@mui/material';
+import { Snackbar, Box, Toolbar, Drawer, Divider, Button } from '@mui/material';
 import CardBox from "./CardBox";
 const { DeckEncoder, Deck, Card } = require('runeterra');
 
@@ -15,7 +15,37 @@ const { DeckEncoder, Deck, Card } = require('runeterra');
   'cost'
 }
 */
-function DeckViewer({deck}) {
+function DeckViewer({deck, regions}) {
+
+  const [numSpells, setNumSpells] = useState(0);
+  const [numUnits, setNumUnits] = useState(0);
+  const [numLandmarks, setNumLandmarks] = useState(0);
+  const [numEquipment, setNumEquipment] = useState(0);
+
+  // console.log(deck);
+  useEffect(() => {
+    let spells = 0;
+    let units = 0;
+    let landmarks = 0;
+    let equipment = 0;
+    for (let card in deck.cards) {
+      if (deck.cards[card].card.type === 'Spell') {
+        spells += deck.cards[card].count;
+      } else if (deck.cards[card].card.type === 'Unit') {
+        units += deck.cards[card].count;
+      } else if (deck.cards[card].card.type === 'Landmark') {
+        landmarks += deck.cards[card].count;
+      } else {
+        equipment += 1;
+      }
+    }
+
+    setNumSpells(spells);
+    setNumUnits(units);
+    setNumLandmarks(landmarks);
+    setNumEquipment(equipment);
+
+  }, [deck]);
 
   const [open, setOpen] = useState(false);
 
@@ -24,28 +54,17 @@ function DeckViewer({deck}) {
     navigator.clipboard.writeText(code);
   };
 
-  // const [deckCode, setDeckCode] = useState('');
-  // console.log(deck.cards);
-  let cardObjs = [];
-  deck.cards.forEach(element => {
-    console.log(element);
-  });
 
   let deckObjArr = deck.cards.map((elem) => {
     return new Card(elem.card.cardCode, elem.count);
   });
 
   let code = (DeckEncoder.encode(deckObjArr));
-  // let deckArr = deck.cards.map((c) => {
-  //   new Card(c.cardCode, c.count);
-  // });
-
-  // console.log(DeckEncoder.encode(deckArr));
 
   // sort
   deck.cards !== undefined && deck.cards.sort((a, b) => {
-    if (a.card.type !== b.card.type) {
-      return a.card.type.localeCompare(b.card.type);
+    if (a.card.rarity !== b.card.rarity) {
+      return a.card.rarity.localeCompare(b.card.rarity);
     } else if (a.card.cost !== b.card.cost) {
       return a.card.cost - b.card.cost;
     } else if (a.card.name !== b.card.name) {
@@ -55,7 +74,7 @@ function DeckViewer({deck}) {
 
 
 
-  const drawerWidth = '22%';
+  const drawerWidth = '325px';
 
   return <Drawer
   sx={{
@@ -93,8 +112,14 @@ function DeckViewer({deck}) {
 
   <Box sx={{display: 'flex', flexDirection: 'column'}}>
 
+  <Box sx={{display: 'flex', gap: '10px'}}>
+    <Box>Units: {numUnits}</Box>
+    <Box>Spells: {numSpells}</Box>
+    <Box>Landmarks: {numLandmarks}</Box>
+    <Box>Equipment: {numEquipment}</Box>
+  </Box>
   {deck.cards !== undefined && deck.cards.map((card, index) => (
-    <CardBox key={index} card={card}/>
+    <CardBox key={index} card={card} regions={regions}/>
 
 ))}
 
