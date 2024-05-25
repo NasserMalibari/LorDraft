@@ -67,7 +67,7 @@ function Nav() {
       </Typography>
       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
         Slapped together pretty quick, but still fun to draft imo. (Still working on it).
-        Last Change: 23 May 2024
+        Last Change: 25 May 2024
       </Typography>
       <Typography id="modal-modal-description" sx={{ mt: 2, fontWeight: 'bold' }}>
         discord: .nas6
